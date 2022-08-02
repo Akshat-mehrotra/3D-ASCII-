@@ -1,13 +1,14 @@
 #include "3dcube.h"
 
 
-void reduce_project(t_point& point){
+void perpspective_projection(t_point& point){
     float last_coord = point.back();
     point.pop_back();
 
     for(int i=0; i<point.size(); i++){
-        point[i] = (point[i]*(PLANE)/(last_coord + DISTANCE));
+        point[i] = (point[i]*(MAGNIFICATION)/((last_coord + DISTANCE)));
     }
+    
 }
 
 char** create_canvas() {
@@ -24,7 +25,18 @@ char** create_canvas() {
 }
 
 void rotate(t_point& point, double theta){
-    point[1] = point[1]*cos(theta) + point[2]*sin(theta);  
+    // x rotation
+    //point[1] = point[1] * cos(theta) - point[2] * sin(theta);
+    //point[2] = point[1] * sin(theta) + point[2] * cos(theta);
+
+    // y rotation
+    //point[0] = point[0] * cos(theta) + point[2] * sin(theta);
+    //point[2] = -1 * point[0] * sin(theta) + point[2] * cos(theta);
+
+    // z rotation
+    point[0] = point[0] * cos(theta) - point[1] * sin(theta);
+    point[1] = point[1] * cos(theta) + point[2] * sin(theta);
+
 }
 
 void reset_canvas(char** canvas){
